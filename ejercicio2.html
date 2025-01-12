@@ -1,0 +1,41 @@
+<!-- Añade un video a la página y agrega un menú desplegable para seleccionar
+diferentes velocidades de reproducción (por ejemplo, 0.5x, 1x, 1.5x, 2x). -->
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 2</title>
+    <style>
+        body{
+            background: black;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Video velocidades</h1>
+    <video id ="video" src="video.mp4" loop autoplay></video><br>
+    <select id="velocidad">
+        <option value="0.5">0.5x</option>
+        <option value="1" selected>1x (Normal)</option>
+        <option value="1.5">1.5x</option>
+        <option value="2">2x</option>
+        <option value="10">10x</option>
+    </select>
+    <script>
+        document.getElementById('velocidad').addEventListener('change', videoSpeed);
+        function videoSpeed(){
+            let speed = this.value;
+            let video = document.getElementById('video')
+            video.playbackRate = speed;
+            video.play(); // A veces se me quedaba parado, supongo que por el LiveView
+        }
+    </script>
+</body>
+
+</html>

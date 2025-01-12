@@ -1,0 +1,29 @@
+<!-- Implementa una notificación en el navegador al hacer clic en un botón.
+Muestra la notificación con título, cuerpo y un ícono. -->
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 3</title>
+</head>
+
+<body>
+    👻 <button id="btn_susto">¿Susto o muerte?</button>
+    <script>
+        document.getElementById('btn_susto').addEventListener('click', notifica);
+        function notifica(){
+            Notification.requestPermission().then((resp)=>{
+                if (resp == 'granted') new Notification('BOO!', {
+                    body: 'Ah... ¡Haber elegido muerte!',
+                    icon: 'https://i.pinimg.com/originals/67/34/e0/6734e009f05a78a6c4c9ecf3cf2d19bc.png'
+                }); 
+                // alert('BOO');
+            });
+        }
+    </script>
+</body>
+
+</html>

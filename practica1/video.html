@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles.css" rel="stylesheet">
+    <title>Video</title>
+</head>
+
+<body>
+    <h1>VIDEO</h1>
+    <video id="video" src="../video.mp4" loop autoplay></video><br>
+    <div id="info">Tiempo: <span id="tiempo"></span></div>
+
+    <script>
+        let video = document.getElementById('video');
+        let info = document.getElementById('info');
+        let tiempo = document.getElementById('tiempo');
+        info.style.display = 'none';
+
+        video.addEventListener('click', () => {
+            info.style.display = 'block';
+            tiempo.innerText = tiempoFormateado(Math.round(video.currentTime));
+        })
+
+        video.addEventListener('contextmenu', (event) => {
+            event.preventDefault();
+            if (video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            };
+        })
+
+        function tiempoFormateado(segundos) {
+            let minutos = Math.floor(segundos / 60);
+            let segundosRestantes = segundos % 60;
+
+            if (segundosRestantes < 10) segundosRestantes = '0' + segundosRestantes;
+
+            return minutos + ':' + segundosRestantes;
+        };
+    </script>
+</body>
+
+</html>

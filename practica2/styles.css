@@ -1,0 +1,46 @@
+body{
+    background: #333;
+    height: 100vh;
+    color: white;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+#contador{
+    font-size: 100px;
+}
+
+button{
+    padding: 15px;
+    margin: 15px;
+    border-radius: 50px;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    background: #CCC;
+}
+
+button:enabled:hover{
+    background: white;
+    outline: 2px solid limegreen;
+}
+
+button:disabled:hover{
+    background: #BBB;
+    outline: 2px solid darkred;
+}
+
+video{
+    border-radius: 30px;
+}
+
+.linkDescarga{
+    text-decoration: none;
+    font-size: 20px;
+    color: rgb(150, 150, 255);
+    margin-top:50px;
+}
+
+.linkDescarga:hover{
+    color: white;
+}

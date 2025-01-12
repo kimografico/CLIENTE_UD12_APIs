@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles.css" rel="stylesheet">
+    <title>Práctica 1</title>
+</head>
+
+<body>
+    <div id="contador">0</div>
+
+    <script>
+        const contador = document.getElementById('contador');
+        const cuentaAtras = 5;
+        contador.innerText = cuentaAtras;
+
+        temporizador(cuentaAtras);
+
+        function notifica() {
+            Notification.requestPermission().then((resp) => {
+                if (resp == 'granted') {
+                    const popup = new Notification('Ver el video', {
+                        body: 'Haz clic para ver el video en otra ventana',
+                        icon: 'video.png'
+                    });
+                    popup.addEventListener('click', ()=>{
+                        window.open('video.html');
+                    })
+                } else {
+                    alert('Es necesario aceptar las notificaciones');
+                }
+            });
+        }
+
+        function temporizador(cuentaAtras) {
+            let tiempo = contador.innerText;
+            const intervalo = setInterval(() => {
+                if (tiempo > 1){
+                    tiempo--;
+                    contador.innerText = tiempo;
+                } else {
+                    clearInterval(intervalo);
+                    contador.innerText = 'Ya';
+                    notifica();
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>

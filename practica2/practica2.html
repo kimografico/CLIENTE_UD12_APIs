@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles.css" rel="stylesheet">
+    <title>Práctica 2</title>
+</head>
+
+<body>
+    <h1>WebCam</h1>
+    <button id="rec">🔴</button><button id="stop">🟥</button>
+    <script>
+        let rec = document.getElementById('rec');
+        let stop = document.getElementById('stop');
+        stop.disabled = true;
+
+
+        // Gran parte del código de esta práctica es copiado y pegado del ejemplo del audio en los apuntes
+        // Se ha modificado para adecuarlo a video, se le ha añadido preview, eliminado el código y promt para label, y añadido la descarga.
+
+        if (navigator.mediaDevices) {
+            console.log("getUserMedia supported.");
+
+            const constraints = { audio: true, video: true };
+            let chunks = [];
+
+            navigator.mediaDevices
+                .getUserMedia(constraints)
+                .then((stream) => {
+                    const mediaRecorder = new MediaRecorder(stream);
+                    
+                    const liveVideo = document.createElement('video');
+                    liveVideo.srcObject = stream;
+                    liveVideo.play();
+                    document.body.appendChild(liveVideo);
+
+                    rec.onclick = () => {
+                        mediaRecorder.start();
+                        console.log(mediaRecorder.state);
+                        stop.disabled = false;
+                        rec.disabled = true;
+                    };
+
+                    stop.onclick = () => {
+                        mediaRecorder.stop();
+                        console.log(mediaRecorder.state);
+                        stop.disabled = true;
+                        rec.disabled = false;
+                    };
+
+                    mediaRecorder.onstop = (e) => {
+                        const clipContainer = document.createElement("article");
+                        const video = document.createElement("video");
+                        const mainContainer = document.querySelector("body");
+
+                        clipContainer.classList.add("clip");
+                        video.setAttribute("controls", "");
+
+                        clipContainer.appendChild(video);
+                        mainContainer.appendChild(clipContainer);
+
+                        liveVideo.style.display = 'none';
+                        rec.style.display = 'none';
+                        stop.style.display = 'none';
+
+                        video.controls = true;
+                        const blob = new Blob(chunks, { type: "video/webm" });
+                        chunks = [];
+                        const videoURL = URL.createObjectURL(blob);
+                        video.src = videoURL;
+                        console.log("recorder stopped");
+                        
+                        const link = document.createElement('a');
+                        link.href = videoURL;
+                        link.download = 'webcam.mp4';
+                        link.textContent = 'Descarga tu video'
+                        link.className = 'linkDescarga'
+                        mainContainer.appendChild(link);
+
+                    };
+
+                    mediaRecorder.ondataavailable = (e) => {
+                        chunks.push(e.data);
+                    };
+                })
+                .catch((err) => {
+                    console.error(`Error: ${err}`);
+                });
+        }
+
+    </script>
+</body>
+
+</html>

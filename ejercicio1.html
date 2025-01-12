@@ -1,0 +1,34 @@
+<!-- Cambia el color del fondo del sitio web según la latitud del usuario: Norte: Azul. Sur: Verde. Ecuador: Amarillo. -->
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1</title>
+</head>
+
+<body>
+    <main></main>
+    <h1>Ejercicio 1</h1>
+    <script>
+        var main = document.getElementsByTagName('main');
+        navigator.geolocation.getCurrentPosition(cambiaColor, geoError);
+
+        function cambiaColor(pos){
+            const lat = pos.coords.latitude;
+            let color = 'white';
+            if (lat >= 10 && lat < 90) color = 'blue';
+            if (lat <= -10) color = 'limegreen';
+            if (lat >= -10 && lat < 10) color = 'yellow';
+            document.body.style.background = color;
+        }
+
+        function geoError (){
+            alert('No se ha podido conseguir la GeoLocalización, es posible que el usuario haya denegado el permiso')
+        }
+    </script>
+</body>
+
+</html>
